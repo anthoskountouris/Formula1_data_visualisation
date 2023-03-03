@@ -48,19 +48,22 @@
             let g = svg.append('g');
                 // .attr("id", "mapLayer");
             
+            // load the data of the world map and draw it on the screen
             d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
                 .then(data => {
-
+                // console.log(data);
+                // convert the TopoJson to GeoJson
                 let countries = topojson.feature(data, data.objects.countries);
                 g.selectAll('path')
                     .data(countries.features)
                     .enter()
-                    // th
                     .append('path')
                     .attr('class', 'country')
                     .attr('d', path)
                 });
             }
         worldmap();
+
+
     </script>
 </html>
