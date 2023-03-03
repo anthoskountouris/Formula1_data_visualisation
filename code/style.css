@@ -1,0 +1,12 @@
+.country {
+    fill: rgb(187, 185, 185);
+    stroke: yellow;
+    stroke-width: 0.5;
+}
+
+svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
