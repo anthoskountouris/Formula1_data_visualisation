@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Bootstrap 5.3.0-alpha1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/simple-statistics@7.8.3/dist/simple-statistics.min.js"></script>
+    <style>
+        .dot {
+            fill: steelblue;
+        }
+        .trendline {
+            stroke: red;
+            stroke-width: 2px;
+            fill: none;
+        }
+    </style>
+    <title>Formula 1 Data Analysis</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="f1_image.png" alt="Logo" width="50" height="25" class="d-inline-block align-text-top">
+                    Data Visualisation Project
+                </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="Formula1.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"href="#">Map</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Q2.html">Q2</a>
+                </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">How does driver's experience impact performance?</h1>
+            </div>
+            <div class="row">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur
+                    libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam
+                    iste.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore
+                    reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col">
+                <div id="chart"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-auto">
+<!--                <button class="" id="toggle-trendline-button">Toggle Trendline</button>-->
+                <button type="button" class="btn btn-danger" id="toggle-trendline-button">Toggle Trendline</button>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</body>
+    <script src="scatter_trend.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+</html>

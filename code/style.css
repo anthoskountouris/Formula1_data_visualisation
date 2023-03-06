@@ -4,9 +4,25 @@
     stroke-width: 0.5;
 }
 
-svg {
+#chart {
     position: absolute;
-    top: 50%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+.container{
+    margin-top: 20px;
+}
+
+#toggle-trendline-button {
+    background-color: red; /* Replace with your desired color code */
+}
+
+/*p {*/
+/*    position: absolute;*/
+/*    z-index: 1;*/
+/*    !* Adjust top and left values as needed *!*/
+/*    top: 200px;*/
+/*    left: 10px;*/
+/*}*/
