@@ -19,6 +19,25 @@
     background-color: red; /* Replace with your desired color code */
 }
 
+.tooltip-container {
+    position: relative;
+    z-index: 2;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 12px;
+    pointer-events: none;
+}
+
+  
+
 /*p {*/
 /*    position: absolute;*/
 /*    z-index: 1;*/
