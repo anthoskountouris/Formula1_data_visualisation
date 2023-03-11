@@ -170,8 +170,8 @@ async function worldmap(){
         .append('path')
         .attr('class', 'country')
         .attr('d', path)
-        .style("fill", "grey")
-        .style("stroke", "white")
+        // .style("fill", "grey")
+        // .style("stroke", "white")
         .append("title")
         .text(d => d.properties.name);
 

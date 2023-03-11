@@ -1,47 +1,78 @@
+body {
+    background-color: whitesmoke;
+}
+
+.navbar {
+    background-color: #ADADAD;
+}
+
+#home {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .country {
     fill: rgb(187, 185, 185);
-    stroke: yellow;
-    stroke-width: 0.5;
+    stroke: black;
+    stroke-width: 0.8;
 }
 
 #chart {
-    position: absolute;
-    top: 75%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+    position: center;
+}
 
 .container{
     margin-top: 20px;
 }
 
 #toggle-trendline-button {
-    background-color: red; /* Replace with your desired color code */
-}
-
-.tooltip-container {
-    position: relative;
-    z-index: 2;
+    background-color: red;
 }
 
 .tooltip {
+    position: relative;
+    top: 0;
+    left: 100%;
+}
+
+
+#q3 {
     position: absolute;
     z-index: 9999;
     display: none;
-    background-color: #fff;
-    color: #333;
-    border: 1px solid #ccc;
+    background-color: black;
+    color: white;
+    border: 1px solid red;
     padding: 10px;
     font-size: 12px;
     pointer-events: none;
+    border-radius: 10px;
 }
 
-  
+svg {
+    position: center;
+}
 
-/*p {*/
-/*    position: absolute;*/
-/*    z-index: 1;*/
-/*    !* Adjust top and left values as needed *!*/
-/*    top: 200px;*/
-/*    left: 10px;*/
-/*}*/
+.dropdown-menu {
+    max-height: 200px;
+    overflow-y: scroll;
+    background-color: whitesmoke;
+
+}
+
+.dropdown-toggle {
+    color: white;
+    border-color: black;
+}
+
+.dropdown-item {
+    color: black;
+}
+
+h2 {
+    color: red;
+}
+
+

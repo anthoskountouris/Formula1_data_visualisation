@@ -1,9 +1,9 @@
-// Set up the margin, width, and height of the chart
+// Seting up the margin, width, and height of the chart
 const margin = { top: 20, right: 20, bottom: 50, left: 50 };
 const width = 600 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
 
-// Create the SVG element
+// Creating the SVG element
 const svg = d3.select("#chart")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -11,24 +11,17 @@ const svg = d3.select("#chart")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// Input data from the csv file and store in the variable data.
+
+// Inputing data from the csv file and store in the variable data.
 d3.csv("q2.csv")
-    .then(function(data) {   // Handle the resolved Promise
+    .then(function(data) {
+        // formating the data
         const formattedData = data.map(function (d) {
             return {x: +d.year, y: +d.points};
         });
         console.log(formattedData);
 
-        // // Set up the scales
-        // const xScale = d3.scaleLinear()
-        //     .domain(d3.extent(formattedData, d => d.x))
-        //     .range([0, width]);
-        //
-        // const yScale = d3.scaleLinear()
-        //     .domain(d3.extent(formattedData, d => d.y))
-        //     .range([height, 0]);
-
-        // Set up the x and y scales
+        // Seting up the x and y scales
         const xScale = d3.scaleLinear()
             .domain([0, d3.max(formattedData, d => d.x)])
             .range([0, width]);
@@ -37,7 +30,7 @@ d3.csv("q2.csv")
             .domain([-10, d3.max(formattedData, d => d.y)])
             .range([height, 0]);
 
-        // Create the x and y axes
+        // Creating the x and y axes
         const xAxis = d3.axisBottom(xScale)
             .ticks(formattedData.length) // set number of ticks to be proportional to the data
             .tickFormat(d => d); // customize the tick format if needed
@@ -71,7 +64,7 @@ d3.csv("q2.csv")
             .attr("transform", "rotate(-90)")
             .text("Average Points Earned");
 
-        // Create the scatter plot
+        // Creating the scatter plot
         svg.selectAll(".dot")
             .data(formattedData)
             .enter()
@@ -79,31 +72,16 @@ d3.csv("q2.csv")
             .attr("class", "dot")
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
+            .attr("r", 5)
             .style("fill", "red")
-            .transition() // apply transition
-            .duration(1000) // set duration in ms
-            .attr("r", 5); // set final radius
-            
+            .append("title")
+            // setting the tooltip text to show year and points
+            .text(d => `Year: ${d.x}\nPoints: ${d.y}`)
+            .transition()
+            .duration(1000);
 
-        
-            
-
-        // Create the trend line
-        // const regression = ss.linearRegression(formattedData.map(d => [d.x, d.y]));
-        // const trendline = ss.linearRegressionLine(regression);
-        // const trendlineData = [
-        //     { x: d3.min(formattedData, d => d.x), y: trendline(d3.min(formattedData, d => d.x)) },
-        //     { x: d3.max(formattedData, d => d.x), y: trendline(d3.max(formattedData, d => d.x)) }
-        // ];
-
-        // const regression = ss.linearRegression(formattedData.map(d => [d.x, d.y]));
-        // const trendline = ss.linearRegressionLine(regression);
-        // const trendlineData = [
-        //     { x: d3.min(formattedData, d => d.x), y: Math.max(trendline(d3.min(formattedData, d => d.x)), 0) },
-        //     { x: d3.max(formattedData, d => d.x), y: Math.max(trendline(d3.max(formattedData, d => d.x)), 0) }
-        // ];
-
-        // Create the trend line
+        // Creating the trend line
+        // Inspired by https://simplestatistics.org/docs/
         let trendlineAdded = false;
         const toggleTrendlineButton = document.getElementById('toggle-trendline-button');
         toggleTrendlineButton.addEventListener('click', () => {
@@ -129,23 +107,13 @@ d3.csv("q2.csv")
                         .x(d => xScale(d.x))
                         .y(d => yScale(d.y))
                     )
-                    .attr("stroke", "blue")
-                    .style("stroke", "black");
+                    .attr("stroke", "black")
+                    // .style("stroke", "black")
+                    .attr("stroke-width", 2);
                 trendlineAdded = true;
             }
             chart.update();
         });
-
-        // // Create the x-axis
-        // const xAxis = d3.axisBottom(xScale);
-        // svg.append("g")
-        //     .attr("transform", `translate(0,${height})`)
-        //     .call(xAxis);
-        //
-        // // Create the y-axis
-        // const yAxis = d3.axisLeft(yScale);
-        // svg.append("g")
-        //     .call(yAxis);
 
     })
 

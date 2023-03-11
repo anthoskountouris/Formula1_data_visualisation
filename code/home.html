@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <!-- D3 library -->
-    <script src="https://d3js.org/d3.v5.js"></script>
-    <!-- D3 library that converts TopoJson to GeoJson -->
-    <script src="https://d3js.org/topojson.v1.min.js"></script>
-
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <title>Formula 1 Data Analysis</title>
 </head>
-
 <body>
 <header>
     <nav class="navbar navbar-expand-lg">
@@ -37,37 +32,21 @@
                     <li class="nav-item">
                         <a class="nav-link"href="Formula1.html">Q3</a>
                     </li>
+
                 </ul>
             </div>
         </div>
     </nav>
 </header>
 
+    <div class="container" id="home">
+        <h1 class = "text-center">Individual Project Assignment</h1>
+        <h1 class = "text-center">7CCSMSDV</h1>
+        <h1 class = "text-center">Introduction to Data Visualization</h1>
+    </div>
 
-<div class="container">
-    <h1 class="text-center">  What is the distribution of circuits around the world that have hosted Formula 1 races and how has it changed over time? </h1>
-    <h2 class = "text-center"></h2>
-    <div class="tooltip-container">
-
-        <svg></svg>
-        <div class="d-flex justify-content-center">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Select Year
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <!-- Adding options here dynamically using JS -->
-                </ul>
-            </div>
-        </div>
-        <div class="container mx-auto" id="textdesc">
-            <p> The pre processing part </p>
-        </div>
-
-        <div>
 </body>
-<script src="map1.js"></script>
-
+<script src="scatter_trend.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </html>

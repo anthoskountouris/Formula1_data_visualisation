@@ -1,23 +1,27 @@
-async function worldmap(){
+async function worldmap() {
+    // setting the width and height of the svg file
     let width = 1200;
     let height = 800;
 
-    let svg = d3.select("svg")
-        .attr("width", width)
-        .attr("height", height);
+    let svg = d3.select("svg").attr("width", width).attr("height", height);
 
     // the projection is the way the map is projected on the screen
-    let projection = d3.geoMercator()
+    let projection = d3
+        .geoMercator()
         .scale([190])
-        .translate([width/2, height/1.3]);
+        .translate([width / 2, height / 1.3]);
 
     // the path is the way the map is drawn on the screen
     let path = d3.geoPath(projection);
 
     // create a zoom behavior that scales and translates the map
-    let zoom = d3.zoom()
+    let zoom = d3
+        .zoom()
         .scaleExtent([1, 8])
-        .translateExtent([[0, 0], [width, height]])
+        .translateExtent([
+            [0, 0],
+            [width, height]
+        ])
         .on("zoom", () => {
             g.attr("transform", d3.event.transform);
         });
@@ -26,111 +30,183 @@ async function worldmap(){
     svg.call(zoom);
 
     // grouping of all the path of the countries
-    let g = svg.append('g');
+    let g = svg.append("g");
 
-    // load the data of the world map and draw it on the screen
-    const data = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+    // loading the data of the world map and draw it on the screen
+    // inspired by the youtube video of https://www.youtube.com/watch?v=aNbgrqRuoiE
+    const data = await d3.json(
+        "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+    );
+
+    // adding a legend
+    let legend = svg.append("g")
+        .attr("class", "legend")
+        .attr("transform", "translate(" + (width - 120) + ",20)");
+
+// creating a circle in the legend
+    legend.append("circle")
+        .attr("cx", 10)
+        .attr("cy", 10)
+        .attr("r", 5)
+        .style("fill", "red");
+
+// creating a text label for the circle in the legend
+    legend.append("text")
+        .attr("x", 20)
+        .attr("y", 10)
+        .attr("dy", "0.35em")
+        .text("Race Track");
+
+    // using the topojson library to extract the countries object from the JSON file containing world map data
     const countries = topojson.feature(data, data.objects.countries);
 
-    g.selectAll('path')
+    // creating the paths
+    g.selectAll("path")
         .data(countries.features)
         .enter()
-        .append('path')
-        .attr('class', 'country')
-        .attr('d', path);
+        .append("path")
+        .attr("class", "country")
+        .attr("d", path);
 
-    let tooltip = d3.select("body")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "1px solid black")
-        .style("padding", "10px")
-        .style("font-size", "12px");
+    // inserting the json file which consists the data we need
+    d3.json("circuits.json").then(function(yearData) {
+        // initializing the starting year anf the final year
+        const startYear = 1950;
+        const finalYear = 2023;
 
-    // add marks for 2022
-    let marks2022 = [];
-    for (let i = 0; i < 50; i++) {
-        let randomPoint = [Math.random() * width, Math.random() * height];
-        let isOnLand = countries.features.some(function(country) {
-            return d3.geoContains(country, projection.invert(randomPoint));
-        });
-        if (isOnLand) {
-            marks2022.push({
-                coordinates: randomPoint,
-                name: `Mark ${i+1} in 2022`,
-                otherInfo: "Some other info"
-            });
+        // inserting the years in the dropdown menu
+        const select = d3.select(".dropdown-menu");
+
+        for (let year = startYear; year <= finalYear; year++) {
+            select
+                .append("li")
+                .text(year)
+                .attr("class", "dropdown-item")
+                .attr("value", year); // set the value attribute to the year
         }
-    }
-    let g2022 = g.append("g").attr("class", "marks2022");
-    g2022.selectAll("circle")
-        .data(marks2022)
-        .enter()
-        .append("circle")
-        .attr("cx", d => d.coordinates[0])
-        .attr("cy", d => d.coordinates[1])
-        .attr("r", 3)
-        .style("fill", "red")
-        .on("mouseover", d => {
-            console.log("x: " + d3.event.pageX + ", y: " + d3.event.pageY);
-            tooltip.style("display", "block")
-                .html(`<div>Name: ${d.name}</div><div>Coordinates: ${d.coordinates[0]}, ${d.coordinates[1]}</div><div>Other info: ${d.otherInfo}</div>`)
-                .style("left", d3.event.pageX + 10 + "px")
-                .style("top", d3.event.pageY + 10 + "px");
-        })
-        .on("mouseout", () => {
-            tooltip.style("display", "none");
-        });
-        // .append("title")
-        // .text(d => `Name: ${d.name} \nCoordinates: ${d.coordinates[0]}, ${d.coordinates[1]} \nOther info: ${d.otherInfo}`);
 
-    // add marks for 2023
+        // Creating a h2 element to display the year selected
+        let yearOnDisplay = d3.select("body").select("h2").text("Season " + finalYear).style('color', 'red');
 
-
-    // .style("fill", "red")
-        // .append("title")
-        // .attr("class", "tooltip")
-        // .text(d => `Name: ${d.name} \nCoordinates: ${d.coordinates[0]}, ${d.coordinates[1]} \nOther info: <strong>${d.otherInfo}</strong>`);
-
-
-// add marks for 2023
-    let marks2023 = [];
-    for (let i = 0; i < 50; i++) {
-        let randomPoint = [Math.random() * width, Math.random() * height];
-        let isOnLand = countries.features.some(function(country) {
-            return d3.geoContains(country, projection.invert(randomPoint));
-        });
-        if (isOnLand) {
-            marks2023.push({
-                coordinates: randomPoint,
-                name: `Mark ${i+1} in 2023`
-            });
+        // function for updating the year in the h2 element
+        function updateYearOnDisplay(year) {
+            yearOnDisplay.text("Season " + year);
         }
-    }
-    let g2023 = g.append("g").attr("class", "marks2023").style("display", "none");
-    g2023.selectAll("circle")
-        .data(marks2023)
-        .enter()
-        .append("circle")
-        .attr("cx", d => d.coordinates[0])
-        .attr("cy", d => d.coordinates[1])
-        .attr("r", 3)
-        .style("fill", "blue")
-        .append("title")
-        .text(d => `Name: ${d.name} \nCoordinates: ${d.coordinates[0]}, ${d.coordinates[1]} \nOther info: <strong>${d.otherInfo}</strong>`);
+
+        // creating the tooltip element
+        let tooltip = d3
+            .select("body")
+            .append("div")
+            .attr("class", "tooltip")
+            .attr("id", "q3")
+            .style("opacity", 0);
 
 
+        //  the g element contains the circles representing the circuit locations on the map
+        let gMarks = g.append("g").attr("class", "marks");
 
-    // update marks when the year is changed
-    d3.select("#year").on("change", function() {
-        let year = d3.select(this).property("value");
-        if (year === "2022") {
-            g2022.style("display", "block");
-            g2023.style("display", "none");
-        } else {
-            g2022.style("display", "none");
-            g2023.style("display", "block");
-                }
+        // adding the circles on th element
+        gMarks
+            .selectAll("circle")
+            .data(yearData[finalYear])
+            .enter()
+            .append("circle")
+            .attr("class", "mark")
+            // adding the coordinates
+            .attr("cx", function (d) {
+                var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                return coords[0];
+            })
+            .attr("cy", function (d) {
+                var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                return coords[1];
+            })
+            //size of th circles
+            .attr("r", 4)
+            .style("fill", "red")
+            // mouseover functionality for the tooltip
+            .on("mouseover", function (d) {
+                // add mouseover event listener
+                tooltip.transition().duration(200).style("opacity", 0.9);
+                tooltip
+                    .html(
+                        "Circuit: " +
+                        d.Circuit +
+                        "<br/>" +
+                        "City: " +
+                        d.City +
+                        "<br/>" +
+                        "Country: " +
+                        d.Country
+                    )
+                    .style("left", d3.event.pageX + 10 + "px")
+                    .style("top", d3.event.pageY - 28 + "px")
+                    .style("display", "block");
+            })
+            .on("mouseout", function () {
+                // add mouseout event listener
+                tooltip.style("display", "none"); // hide the tooltip
             });
+
+        // slecting the dropdown again, to be more understandable
+        const dropdown = d3.select(".dropdown-menu");
+
+        // updating marks when the year is changed
+        dropdown.selectAll("li").on("click", function () {
+            let year = d3.select(this).attr("value");
+            updateYearOnDisplay(year);
+            let marksData = yearData[year];
+
+            // updating the data of the circles with the "mark" class
+            let marks = g.selectAll(".mark") // select only circles with "mark" class
+                .data(marksData);
+
+            // removing circles that are not needed
+            marks.exit().remove();
+
+            // adding new circles and update existing ones
+            marks.enter().append("circle")
+                .attr("class", "mark")
+                .attr("r", 4)
+                .style("fill", "red")
+                .merge(marks)
+                .transition()
+                .duration(500)
+                .attr("cx", function (d) {
+                    var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                    return coords[0];
+                })
+                .attr("cy", function (d) {
+                    var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                    return coords[1];
+                })
+                .on("mouseover", function (d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html(
+                        "Circuit: " +
+                        d.Circuit +
+                        "<br/>" +
+                        "City: " +
+                        d.City +
+                        "<br/>" +
+                        "Country: " +
+                        d.Country
+                    )
+                        .style("left", (d3.event.pageX + 10) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px")
+                        .style("display", "block");
+                })
+                .on("mouseout", function () {
+                    tooltip.style("display", "none");
+                });
+        });
+    });
 }
+
 worldmap();
+
+
+
+

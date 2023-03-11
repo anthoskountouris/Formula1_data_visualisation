@@ -9,21 +9,12 @@
     <!-- D3 library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/simple-statistics@7.8.3/dist/simple-statistics.min.js"></script>
-    <style>
-        .dot {
-            fill: steelblue;
-        }
-        .trendline {
-            stroke: red;
-            stroke-width: 2px;
-            fill: none;
-        }
-    </style>
+
     <title>Formula 1 Data Analysis</title>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="f1_image.png" alt="Logo" width="50" height="25" class="d-inline-block align-text-top">
@@ -35,14 +26,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="Formula1.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"href="#">Map</a>
+                    <a class="nav-link active" aria-current="page" href="home.html">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Q2.html">Q2</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link"href="Formula1.html">Q3</a>
+                </li>
+
                 </ul>
             </div>
             </div>
@@ -66,16 +58,15 @@
             </div>
         </div>
         <div class="row justify-content-md-center">
-            <div class="col">
+            <div class="col text-center">
+                <div class="tooltip"></div>
                 <div id="chart"></div>
             </div>
         </div>
         <div class="row">
             <div class="col"></div>
             <div class="col-md-auto">
-<!--                <button class="" id="toggle-trendline-button">Toggle Trendline</button>-->
                 <button type="button" class="btn btn-danger" id="toggle-trendline-button">Toggle Trendline</button>
-                <!-- <div class="tooltip"></div> -->
             </div>
             <div class="col"></div>
         </div>
