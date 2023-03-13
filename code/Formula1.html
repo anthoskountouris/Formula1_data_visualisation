@@ -16,58 +16,75 @@
 </head>
 
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="f1_image.png" alt="Logo" width="50" height="25" class="d-inline-block align-text-top">
-                Data Visualisation Project
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="home.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Q2.html">Q2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"href="Formula1.html">Q3</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-
-<div class="container">
-    <h1 class="text-center">  What is the distribution of circuits around the world that have hosted Formula 1 races and how has it changed over time? </h1>
-    <h2 class = "text-center"></h2>
-    <div class="tooltip-container">
-
-        <svg></svg>
-        <div class="d-flex justify-content-center">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Select Year
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="f1_image.png" alt="Logo" width="50" height="25" class="d-inline-block align-text-top">
+                    Data Visualisation Project
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <!-- Adding options here dynamically using JS -->
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Q2.html">Q2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"href="Formula1.html">Q3</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <h1 class="text-center">  What is the distribution of circuits around the world that have hosted Formula 1 races and how has it changed over time? </h1>
+        <h2 class = "text-center"></h2>
+        <div class="tooltip-container"></div>
+
+            <svg></svg>
+            <div class="d-flex justify-content-center">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Year
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <!-- Adding options here dynamically using JS -->
+                    </ul>
+                </div>
+            </div>
+
+        <div class="container" id="textdesc">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-md-auto">
+                    <h5>Processing of data</h5>
+
+                    <p> The data for this visualisation was processed using Python Pandas dataframes. The datasets
+                        used were drivers, driver_standings, and races from the Formula 1 World Championship (1950 - 2023)
+                        dataset on Kaggle. Firstly, null values were checked to ensure that the data was ready for
+                        processing. The number of seasons each driver has competed in Formula 1 was then calculated
+                        to determine their years of experience. Next, the average points earned per season by each
+                        driver was calculated to associate it with their years of experience and compute the average
+                        points earned per season of experience in general. This approach helps identify trends in
+                        whether a driver's experience has an impact on their performance. The resulting data from
+                        this processing was exported as a CSV file that the visualisation is using to present the data.</p>
+                </div>
+                <div class="col"></div>
             </div>
         </div>
-        <div class="container mx-auto" id="textdesc">
-            <p> The pre processing part </p>
-        </div>
+    </div>
 
-        <div>
 </body>
-<script src="map1.js"></script>
 
+<script src="map1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </html>

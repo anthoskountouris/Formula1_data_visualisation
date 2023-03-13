@@ -46,15 +46,6 @@
                 <h1 class="text-center">How does driver's experience impact performance?</h1>
             </div>
             <div class="row">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur
-                    libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam
-                    iste.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore
-                    reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quo quasi neque consequatur libero perspiciatis minima unde labore reprehenderit explicabo! Nihil itaque nemo, rerum quo dignissimos deleniti nobis quisquam iste.
-                </p>
             </div>
         </div>
         <div class="row justify-content-md-center">
@@ -65,12 +56,36 @@
         </div>
         <div class="row">
             <div class="col"></div>
-            <div class="col-md-auto">
+            <div class="col-md-auto mt-3">
                 <button type="button" class="btn btn-danger" id="toggle-trendline-button">Toggle Trendline</button>
             </div>
             <div class="col"></div>
         </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-md-auto">
+                    <h5>Processing of data</h5>
+
+                    <p> The data for this visualisation was processed using Python Pandas dataframes. The datasets
+                        used were drivers, driver_standings, and races from the Formula 1 World Championship (1950 - 2023)
+                        dataset on Kaggle. Firstly, null values were checked to ensure that the data was ready for
+                        processing. The number of seasons each driver has competed in Formula 1 was then calculated
+                        to determine their years of experience. Next, the average points earned per season by each
+                        driver was calculated to associate it with their years of experience and compute the average
+                        points earned per season of experience in general. This approach helps identify trends in
+                        whether a driver's experience has an impact on their performance. The resulting data from
+                        this processing was exported as a CSV file that the visualisation is using to present the data.</p>
+                </div>
+                <div class="col"></div>
+        </div>
+
+        </div>
+
+
     </div>
+
 </body>
     <script src="scatter_trend.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
