@@ -67,15 +67,19 @@
                 <div class="col-md-auto">
                     <h5>Processing of data</h5>
 
-                    <p> The data for this visualisation was processed using Python Pandas dataframes. The datasets
-                        used were drivers, driver_standings, and races from the Formula 1 World Championship (1950 - 2023)
-                        dataset on Kaggle. Firstly, null values were checked to ensure that the data was ready for
-                        processing. The number of seasons each driver has competed in Formula 1 was then calculated
-                        to determine their years of experience. Next, the average points earned per season by each
-                        driver was calculated to associate it with their years of experience and compute the average
-                        points earned per season of experience in general. This approach helps identify trends in
-                        whether a driver's experience has an impact on their performance. The resulting data from
-                        this processing was exported as a CSV file that the visualisation is using to present the data.</p>
+                    <p> The data for this visualization was processed using Python Pandas dataframes.
+                        The datasets used were circuits and races from the Formula 1 World Championship
+                        (1950 - 2023) dataset on Kaggle. Firstly, null values were checked to ensure the
+                        data was ready for processing. Then, the datasets were merged based on their common
+                        attribute, the 'circuitId', to associate each circuit with its corresponding season.
+                        Next, only the necessary attributes were selected for the visualization, such as the
+                        year, circuit name, city, country, latitude, and longitude. A dictionary was then
+                        created where each year is a key and the value is a list of dictionaries, each
+                        representing a race at a particular circuit for that year. The inner dictionary
+                        contains the circuit name, city, country, and the latitude and longitude coordinates.
+                        Finally, the resulting dictionary was saved as a JSON file, ready to be used by the D3
+                        JavaScript library.
+                    </p>
                 </div>
                 <div class="col"></div>
             </div>
