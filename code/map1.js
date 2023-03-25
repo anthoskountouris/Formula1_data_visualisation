@@ -101,6 +101,29 @@ async function worldmap() {
             .attr("id", "q3")
             .style("opacity", 0);
 
+        // Function for the tooltip
+        function assignEventListeners(selection, tooltip, projection) {
+            selection.on("mouseover", function (d) {
+                tooltip.transition().duration(200).style("opacity", 0.9);
+                tooltip
+                    .html(
+                        "Circuit: " +
+                        d.Circuit +
+                        "<br/>" +
+                        "City: " +
+                        d.City +
+                        "<br/>" +
+                        "Country: " +
+                        d.Country
+                    )
+                    .style("left", d3.event.pageX + 10 + "px")
+                    .style("top", d3.event.pageY - 28 + "px")
+                    .style("display", "block");
+            })
+                .on("mouseout", function () {
+                    tooltip.style("display", "none");
+                });
+        }
 
         //  the g element contains the circles representing the circuit locations on the map
         let gMarks = g.append("g").attr("class", "marks");
@@ -123,30 +146,34 @@ async function worldmap() {
             })
             //size of th circles
             .attr("r", 4)
-            .style("fill", "red")
-            // mouseover functionality for the tooltip
-            .on("mouseover", function (d) {
-                // add mouseover event listener
-                tooltip.transition().duration(200).style("opacity", 0.9);
-                tooltip
-                    .html(
-                        "Circuit: " +
-                        d.Circuit +
-                        "<br/>" +
-                        "City: " +
-                        d.City +
-                        "<br/>" +
-                        "Country: " +
-                        d.Country
-                    )
-                    .style("left", d3.event.pageX + 10 + "px")
-                    .style("top", d3.event.pageY - 28 + "px")
-                    .style("display", "block");
-            })
-            .on("mouseout", function () {
-                // add mouseout event listener
-                tooltip.style("display", "none"); // hide the tooltip
-            });
+            .style("fill", "red");
+
+        // assigning event listeners to the circles, tooltip will show up
+        assignEventListeners(gMarks.selectAll("circle"), tooltip, projection);
+
+        // // mouseover functionality for the tooltip
+            // .on("mouseover", function (d) {
+            //     // add mouseover event listener
+            //     tooltip.transition().duration(200).style("opacity", 0.9);
+            //     tooltip
+            //         .html(
+            //             "Circuit: " +
+            //             d.Circuit +
+            //             "<br/>" +
+            //             "City: " +
+            //             d.City +
+            //             "<br/>" +
+            //             "Country: " +
+            //             d.Country
+            //         )
+            //         .style("left", d3.event.pageX + 10 + "px")
+            //         .style("top", d3.event.pageY - 28 + "px")
+            //         .style("display", "block");
+            // })
+            // .on("mouseout", function () {
+            //     // add mouseout event listener
+            //     tooltip.style("display", "none"); // hide the tooltip
+            // });
 
         // slecting the dropdown again, to be more understandable
         const dropdown = d3.select(".dropdown-menu");
@@ -179,28 +206,32 @@ async function worldmap() {
                 .attr("cy", function (d) {
                     var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
                     return coords[1];
-                })
-                .on("mouseover", function (d) {
-                    tooltip.transition()
-                        .duration(200)
-                        .style("opacity", .9);
-                    tooltip.html(
-                        "Circuit: " +
-                        d.Circuit +
-                        "<br/>" +
-                        "City: " +
-                        d.City +
-                        "<br/>" +
-                        "Country: " +
-                        d.Country
-                    )
-                        .style("left", (d3.event.pageX + 10) + "px")
-                        .style("top", (d3.event.pageY - 28) + "px")
-                        .style("display", "block");
-                })
-                .on("mouseout", function () {
-                    tooltip.style("display", "none");
                 });
+
+            // Assign event listeners to the updated circles
+            assignEventListeners(g.selectAll(".mark"), tooltip, projection);
+
+                // .on("mouseover", function (d) {
+                //     tooltip.transition()
+                //         .duration(200)
+                //         .style("opacity", .9);
+                //     tooltip.html(
+                //         "Circuit: " +
+                //         d.Circuit +
+                //         "<br/>" +
+                //         "City: " +
+                //         d.City +
+                //         "<br/>" +
+                //         "Country: " +
+                //         d.Country
+                //     )
+                //         .style("left", (d3.event.pageX + 10) + "px")
+                //         .style("top", (d3.event.pageY - 28) + "px")
+                //         .style("display", "block");
+                // })
+                // .on("mouseout", function () {
+                //     tooltip.style("display", "none");
+                // });
         });
     });
 }
