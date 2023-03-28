@@ -76,20 +76,28 @@
                 <div class="col-md-auto">
                     <h5>Processing of data</h5>
 
-                    <p> The data for both visualizations was pre-processed using Python Pandas dataframes.
-                        The datasets used were the "circuits" and "races" from the Formula 1 World Championship (1950 - 2023)
-                        dataset on Kaggle. Firstly, null values were checked to ensure the data was ready for processing.
-                        Then, the datasets were merged based on their common attribute, the 'circuitId', to associate each
-                        circuit with its corresponding season. Next, the necessary attributes were selected for both
-                        visualisations. For the map visualization, the attributes year, circuit name, city, country,
-                        latitude, and longitude were needed. A dictionary was then created where each year is a key and
-                        the value is a list of dictionaries, each representing a race at a particular circuit for that year.
-                        The inner dictionary contains the circuit name, city, country, and the latitude and longitude
-                        coordinates. Moving on, the resulting dictionary was saved as a JSON file, ready to be used by
-                        the D3 JavaScript library. On the other hand, for the barchart, only the attributes year and
-                        circuits were needed. Afterwards, the result of the grouping of circuits per year, was extracted
-                        as a CSV file to be used for the creation.
+                    <p> The data for both visualizations was preprocessed using Python Pandas dataframes.
+                        The datasets used were "circuits" and "races" from the Formula 1 World Championship
+                        (1950 - 2023) dataset on Kaggle. Firstly, null values were checked to ensure the
+                        data was ready for processing. Then, the datasets were merged based on their common
+                        attribute, the 'circuitId', to associate each circuit with its corresponding season.
+                        Next, the necessary attributes were selected for both visualizations. </p>
+
+                    <p>For the map visualization, the attributes year, circuit name, city, country, latitude,
+                        and longitude were needed. A dictionary was then created where each year is a key, and
+                        the value is a list of dictionaries, each representing a race at a particular circuit
+                        for that year. The inner dictionary contains the circuit name, city, country, and the
+                        latitude and longitude coordinates. Moving on, the resulting dictionary was saved as
+                        a JSON file, ready to be used by the D3 JavaScript library. Having this format of data
+                        allowed categorizing the circuits into years and getting the coordinates of each circuit
+                        to visualize them on the map, along with other relevant information.<p/>
+
+                    <p>On the other hand, for the barchart, only the attributes year and circuits were needed.
+                        The result of grouping circuits per year was extracted as a CSV file to be used by the
+                        D3 JavaScript library. This format of data allowed visualizing the counts of each circuit
+                        per year.
                     </p>
+
                 </div>
                 <div class="col"></div>
             </div>
