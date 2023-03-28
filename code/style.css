@@ -34,6 +34,11 @@ body {
     background-color: #ba181b;
 }
 
+#mapChart{
+    display: block;
+    margin: 0 auto;
+}
+
 .tooltip {
     position: relative;
     top: 0;
