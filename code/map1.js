@@ -1,3 +1,4 @@
+
 async function worldmap() {
     // setting the width and height of the svg file
     let width = 1200;
@@ -48,7 +49,7 @@ async function worldmap() {
         .attr("cx", 10)
         .attr("cy", 10)
         .attr("r", 5)
-        .style("fill", "red");
+        .style("fill", "#ba181b");
 
 // creating a text label for the circle in the legend
     legend.append("text")
@@ -86,7 +87,7 @@ async function worldmap() {
         }
 
         // Creating a h2 element to display the year selected
-        let yearOnDisplay = d3.select("body").select("h2").text("Season " + finalYear).style('color', 'red');
+        let yearOnDisplay = d3.select("body").select("h2").text("Season " + finalYear).style('color', '#ba181b');
 
         // function for updating the year in the h2 element
         function updateYearOnDisplay(year) {
@@ -146,7 +147,7 @@ async function worldmap() {
             })
             //size of th circles
             .attr("r", 4)
-            .style("fill", "red");
+            .style("fill", "#ba181b");
 
         // assigning event listeners to the circles, tooltip will show up
         assignEventListeners(gMarks.selectAll("circle"), tooltip, projection);
@@ -195,7 +196,7 @@ async function worldmap() {
             marks.enter().append("circle")
                 .attr("class", "mark")
                 .attr("r", 4)
-                .style("fill", "red")
+                .style("fill", "#ba181b")
                 .merge(marks)
                 .transition()
                 .duration(500)
@@ -208,7 +209,7 @@ async function worldmap() {
                     return coords[1];
                 });
 
-            // Assign event listeners to the updated circles
+            // Assigning event listeners to the updated circles
             assignEventListeners(g.selectAll(".mark"), tooltip, projection);
 
                 // .on("mouseover", function (d) {
@@ -232,11 +233,139 @@ async function worldmap() {
                 // .on("mouseout", function () {
                 //     tooltip.style("display", "none");
                 // });
+
+            highlightSelectedYear(year);
         });
+
     });
 }
-
 worldmap();
+
+async function createBarChart() {
+    // setting the margin and dimensions of the chart
+    const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+        width = 1300 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    // Selecting the svg element
+    const svg = d3.select("#barChart")
+        // setting the dimensions
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Loading the data of the counts from the csv file
+    const data = await d3.csv("year_counts.csv");
+    // console.log(data);
+    // Creating x-axis scale using the "Year" column in the data
+    const x = d3.scaleBand()
+        .domain(data.map(d => d.Year))
+        .range([0, width])
+        .padding(0.2);
+    // Appendig the x-axis to the chart
+    svg.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0) rotate(-45)")
+        .style("text-anchor", "end")
+        .style("font-weight", "bold");
+
+    // Appending the x-axis label
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .style("font-family", "Helvetica Neue")
+        .text("Year");
+
+    // Creating the scale using the "Circuits" column in the data
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => +d.Circuit)])
+        .range([height, 0]);
+
+    // Creating the y-axis axis
+    const yAxis = d3.axisLeft(y).ticks(d3.max(data, d => +d.Circuit));
+    // Appending the y-axis to the chart
+    svg.append("g")
+        .call(yAxis)
+        .selectAll("text")
+        .style("font-weight", "bold");
+
+    // Appending the y-axis label
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .style("font-family", "Helvetica Neue")
+        .text("Circuit Count");
+
+    // Creating a bar for each data point and appending it to the chart
+    svg.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("x", d => x(d.Year))
+        .attr("y", d => y(d.Circuit))
+        .attr("width", x.bandwidth())
+        .attr("height", d => height - y(d.Circuit))
+        .attr("fill", "#ba181b");
+
+    // Creating a text element for each bar to show the count
+    svg.selectAll(".bar-text")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("class", "bar-text")
+        .attr("x", d => x(d.Year) + x.bandwidth() / 2)
+        .attr("y", d => y(d.Circuit) - 5)
+        .attr("text-anchor", "middle")
+        .style("font-size", "13px")
+        .style("text-decoration", "bold")
+        .style("fill", "black")
+        .style("visibility", "hidden")
+        .text(d => d.Circuit);
+
+
+    // Appending title to the chart
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 4)
+        .attr("text-anchor", "middle")
+        .style("font-size", "25px")
+        .style("text-decoration", "bold")
+        .style("font-family", "Helvetica Neue")
+        .text("Distribution of circuits across the years");
+}
+// updating the color and opacity of the bars based on the selected year
+function highlightSelectedYear(year) {
+    const bars = d3.select("#barChart").selectAll("rect");
+    bars.transition()
+        .duration(500)
+        // Setting the color of all bars to #ba181b
+        .style("fill", "#ba181b")
+        // Setting the opacity of the selected year's bar to 1, and all others to 0.5
+        .style("opacity", (d) => (d.Year === year ? 1 : 0.5));
+
+    // Updating the visibility of the text elements based on the selected year
+    const barTexts = d3.select("#barChart").selectAll(".bar-text");
+    barTexts.transition()
+        .duration(500)
+        .style("visibility", (d) => (d.Year === year ? "visible" : "hidden"));
+
+}
+
+createBarChart();
+
+
+
 
 
 

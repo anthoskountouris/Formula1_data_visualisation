@@ -73,7 +73,7 @@ d3.csv("q2.csv")
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
             .attr("r", 5)
-            .style("fill", "red")
+            .style("fill", "#ba181b")
             .append("title")
             // setting the tooltip text to show year and points
             .text(d => `Year: ${d.x}\nPoints: ${d.y}`)

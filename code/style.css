@@ -31,7 +31,7 @@ body {
 }
 
 #toggle-trendline-button {
-    background-color: red;
+    background-color: #ba181b;
 }
 
 .tooltip {
@@ -47,7 +47,7 @@ body {
     display: none;
     background-color: black;
     color: #F8F1E9;
-    border: 1px solid red;
+    border: 1px solid #ba181b;
     padding: 10px;
     font-size: 12px;
     pointer-events: none;
@@ -75,7 +75,7 @@ svg {
 }
 
 h2 {
-    color: red;
+    color: #ba181b;
 }
 
 
