@@ -11,7 +11,6 @@
     <script src="https://d3js.org/d3.v5.js"></script>
     <!-- D3 library that converts TopoJson to GeoJson -->
     <script src="https://d3js.org/topojson.v1.min.js"></script>
-    <script src="https://unpkg.com/crossfilter2@1.5.3/crossfilter.min.js"></script>
 
 
     <title>Formula 1 Data Analysis</title>
@@ -45,6 +44,7 @@
         </nav>
     </header>
 
+
     <div class="container">
         <h1 class="text-center">  What is the distribution of circuits around the world that have hosted Formula 1 races and how has it changed over time? </h1>
         <h2 class = "text-center"></h2>
@@ -57,7 +57,7 @@
             <div class="d-flex justify-content-center">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Select Year
+                        Select Season
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <!-- Adding options here dynamically using JS -->
@@ -77,10 +77,10 @@
                     <h5>Processing of data</h5>
 
                     <p> The data for both visualizations was preprocessed using Python Pandas dataframes.
-                        The datasets used were "circuits" and "races" from the Formula 1 World Championship
+                        The datasets used were &ldquo;circuits&rdquo; and &ldquo;races&rdquo; from the Formula 1 World Championship
                         (1950 - 2023) dataset on Kaggle. Firstly, null values were checked to ensure the
                         data was ready for processing. Then, the datasets were merged based on their common
-                        attribute, the 'circuitId', to associate each circuit with its corresponding season.
+                        attribute, the &ldquo;circuitId&rdquo;, to associate each circuit with its corresponding season.
                         Next, the necessary attributes were selected for both visualizations. </p>
 
                     <p>For the map visualization, the attributes year, circuit name, city, country, latitude,
@@ -106,7 +106,7 @@
 
 </body>
 
-<script src="map1.js"></script>
+<script src="map.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </html>

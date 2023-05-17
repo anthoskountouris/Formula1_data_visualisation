@@ -1,247 +1,326 @@
-// async function worldmap(){
-//     let width = 1200;
-//     let height = 800;
 
-//     let svg = d3.select("svg")
-//         .attr("width", width)
-//         .attr("height", height);
-    
-//     // the projection is the way the map is projected on the screen
-//     let projection = d3.geoMercator()
-//         .scale([190])
-//         .translate([width/2, height/1.3]);
-
-//     // the path is the way the map is drawn on the screen
-//     let path = d3.geoPath(projection);
-
-//     // grouping of all the path of the countries
-//     let g = svg.append('g');
-//         // .attr("id", "mapLayer");
-    
-//     // load the data of the world map and draw it on the screen
-//     d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
-//         .then(data => {
-//         // console.log(data);
-//         // convert the TopoJson to GeoJson
-//         let countries = topojson.feature(data, data.objects.countries);
-//         g.selectAll('path')
-//             .data(countries.features)
-//             .enter()
-//             .append('path')
-//             .attr('class', 'country')
-//             .attr('d', path)
-//         });
-//     }
-
-// async function worldmap(){
-//     let width = 1200;
-//     let height = 800;
-
-//     let svg = d3.select("svg")
-//         .attr("width", width)
-//         .attr("height", height);
-
-//     // the projection is the way the map is projected on the screen
-//     let projection = d3.geoMercator()
-//         .scale([190])
-//         .translate([width/2, height/1.3]);
-
-//     // the path is the way the map is drawn on the screen
-//     let path = d3.geoPath(projection);
-
-//     // create a zoom behavior that scales and translates the map
-//     let zoom = d3.zoom()
-//     .scaleExtent([1, 8])
-//     .translateExtent([[0, 0], [width, height]])
-//     .on("zoom", () => {
-//         g.attr("transform", d3.event.transform);
-//     });
-
-// // add the zoom behavior to the svg
-// svg.call(zoom);
-
-//     // grouping of all the path of the countries
-//     let g = svg.append('g');
-
-//     // load the data of the world map and draw it on the screen
-//     const data = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
-//     const countries = topojson.feature(data, data.objects.countries);
-
-//     g.selectAll('path')
-//         .data(countries.features)
-//         .enter()
-//         .append('path')
-//         .attr('class', 'country')
-//         .attr('d', path);
-
-//     // add marks for 2022
-//     let marks2022 = [];
-//     for (let i = 0; i < 50; i++) {
-//         let randomPoint = [Math.random() * width, Math.random() * height];
-//         let isOnLand = countries.features.some(function(country) {
-//             return d3.geoContains(country, projection.invert(randomPoint));
-//         });
-//         if (isOnLand) {
-//             marks2022.push(randomPoint);
-//         }
-//     }
-//     let g2022 = g.append("g").attr("class", "marks2022");
-//     g2022.selectAll("circle")
-//         .data(marks2022)
-//         .enter()
-//         .append("circle")
-//         .attr("cx", d => d[0])
-//         .attr("cy", d => d[1])
-//         .attr("r", 5)
-//         .style("fill", "red");
-
-//     // add marks for 2023
-//     let marks2023 = [];
-//     for (let i = 0; i < 50; i++) {
-//         let randomPoint = [Math.random() * width, Math.random() * height];
-//         let isOnLand = countries.features.some(function(country) {
-//             return d3.geoContains(country, projection.invert(randomPoint));
-//         });
-//         if (isOnLand) {
-//             marks2023.push(randomPoint);
-//         }
-//     }
-//     let g2023 = g.append("g").attr("class", "marks2023").style("display", "none");
-//     g2023.selectAll("circle")
-//         .data(marks2023)
-//         .enter()
-//         .append("circle")
-//         .attr("cx", d => d[0])
-//         .attr("cy", d => d[1])
-//         .attr("r", 3)
-//         .style("fill", "blue");
-
-//     // update marks when the year is changed
-//     d3.select("#year").on("change", function() {
-//         let year = d3.select(this).property("value");
-//         if (year === "2022") {
-//             g2022.style("display", "block");
-//             g2023.style("display", "none");
-//         } else {
-//             g2022.style("display", "none");
-//             g2023.style("display", "block");
-//                 }
-//             });
-// }
-// worldmap();
-
-async function worldmap(){
+async function worldmap() {
+    // setting the width and height of the svg file
     let width = 1200;
-    let height = 710;
+    let height = 800;
 
-    let svg = d3.select("svg")
-        .attr("width", width)
-        .attr("height", height);
+    let svg = d3.select("svg").attr("width", width).attr("height", height);
 
     // the projection is the way the map is projected on the screen
-    let projection = d3.geoMercator()
+    let projection = d3
+        .geoMercator()
         .scale([190])
-        .translate([width/2, height/1.3]);
+        .translate([width / 2, height / 1.3]);
 
     // the path is the way the map is drawn on the screen
     let path = d3.geoPath(projection);
 
     // create a zoom behavior that scales and translates the map
-    let zoom = d3.zoom()
-    .scaleExtent([1, 8])
-    .translateExtent([[0, 0], [width, height]])
-    .on("zoom", () => {
-        g.attr("transform", d3.event.transform);
-    });
+    let zoom = d3
+        .zoom()
+        .scaleExtent([1, 8])
+        .translateExtent([
+            [0, 0],
+            [width, height]
+        ])
+        .on("zoom", () => {
+            g.attr("transform", d3.event.transform);
+        });
 
     // add the zoom behavior to the svg
     svg.call(zoom);
 
     // grouping of all the path of the countries
-    let g = svg.append('g');
+    let g = svg.append("g");
 
-    // load the data of the world map and draw it on the screen
-    const data = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+    // loading the data of the world map and draw it on the screen
+    // inspired by the youtube video of https://www.youtube.com/watch?v=aNbgrqRuoiE
+    const data = await d3.json(
+        "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+    );
+
+    // adding a legend
+    let legend = svg.append("g")
+        .attr("class", "legend")
+        .attr("transform", "translate(" + (width - 120) + ",20)");
+
+// creating a circle in the legend
+    legend.append("circle")
+        .attr("cx", 10)
+        .attr("cy", 10)
+        .attr("r", 5)
+        .style("fill", "#ba181b");
+
+// creating a text label for the circle in the legend
+    legend.append("text")
+        .attr("x", 20)
+        .attr("y", 10)
+        .attr("dy", "0.35em")
+        .text("Race Track");
+
+    // using the topojson library to extract the countries object from the JSON file containing world map data
     const countries = topojson.feature(data, data.objects.countries);
 
-    g.selectAll('path')
+    // creating the paths
+    g.selectAll("path")
         .data(countries.features)
         .enter()
-        .append('path')
-        .attr('class', 'country')
-        .attr('d', path)
-        // .style("fill", "grey")
-        // .style("stroke", "white")
-        .append("title")
-        .text(d => d.properties.name);
-
-    // load the data of the US states and draw it on the screen
-    // const states = await d3.json('https://d3js.org/us-10m.v2.json');
-    // g.append('path')
-    //     .datum(topojson.feature(states, states.objects.states))
-    //     .attr('class', 'state')
-    //     .attr('d', path)
-    //     .style("fill", "orange")
-    //     .style("stroke", "white")
-    //     .style("stroke-width", "0.5px");
-
-    // add marks for 2022
-    let marks2022 = [];
-    for (let i = 0; i < 22; i++) {
-        let randomCountry = countries.features[Math.floor(Math.random() * countries.features.length)];
-        marks2022.push(randomCountry);
-    }
-    // add marks for 2022
-    // const marks2022 = [
-    //     {name: 'USA', coordinates: [-95.712891, 37.09024]},
-    //     {name: 'China', coordinates: [104.195397, 35.86166]},
-    //     {name: 'Brazil', coordinates: [-51.92528, -14.235004]},
-    //     {name: 'India', coordinates: [78.96288, 20.593684]},
-    //     {name: 'Russia', coordinates: [105.318756, 61.52401]},
-    //     {name: 'Australia', coordinates: [133.77513, -25.274398]},
-    //     {name: 'France', coordinates: [2.213749, 46.227638]},
-    //     {name: 'United Kingdom', coordinates: [-3.435973, 55.378051]},
-    //     {name: 'Japan', coordinates: [138.252924, 36.204824]},
-    //     {name: 'South Africa', coordinates: [24.991639, -28.816624]}
-    // ];
-
-    console.log(marks2022);
-    let g2022 = g.append("g").attr("class", "marks2022");
-    g2022.selectAll("path")
-        .data(marks2022)
-        .enter()
         .append("path")
-        .attr("d", path)
-        .style("fill", "red")
-        .style("stroke", "white");
+        .attr("class", "country")
+        .attr("d", path);
 
-    // add marks for 2023
-    // let marks2023 = [];
-    // for (let i = 0; i < 10; i++) {
-    //     let randomCountry = countries.features[Math.floor(Math.random() * countries.features.length)];
-    //     marks2023.push(randomCountry);
-    // }
-    // let g2023 = g.append("g").attr("class", "marks2023").style("display", "none");
-    // g2023.selectAll("path")
-    //     .data(marks2023)
-    //     .enter()
-    //     .append("path")
-    //     .attr("d", path)
-    //     .style("fill", "blue")
-    //     .style("stroke", "white");
+    // inserting the json file which consists the data we need
+    d3.json("circuits.json").then(function(yearData) {
+        // initializing the starting year anf the final year
+        const startYear = 1950;
+        const finalYear = 2023;
 
-    // update marks when the year is changed
-    d3.select("#year").on("change", function() {
-        let year = d3.select(this).property("value");
-        if (year === "2022") {
-            g2022.style("display", "block");
-            g2023.style("display", "none");
-        } else {
-            g2022.style("display", "none");
-            g2023.style("display", "block");
+        // inserting the years in the dropdown menu
+        const select = d3.select(".dropdown-menu");
+
+        for (let year = startYear; year <= finalYear; year++) {
+            select
+                .append("li")
+                .text(year)
+                .attr("class", "dropdown-item")
+                .attr("value", year); // set the value attribute to the year
         }
+
+        // Creating a h2 element to display the year selected
+        let yearOnDisplay = d3.select("body").select("h2").text("Season " + finalYear).style('color', '#ba181b');
+
+        // function for updating the year in the h2 element
+        function updateYearOnDisplay(year) {
+            yearOnDisplay.text("Season " + year);
+        }
+
+        // creating the tooltip element
+        let tooltip = d3
+            .select("body")
+            .append("div")
+            .attr("class", "tooltip")
+            .attr("id", "q3")
+            .style("opacity", 0);
+
+        // Function for the tooltip
+        function assignEventListeners(selection, tooltip, projection) {
+            selection.on("mouseover", function (d) {
+                tooltip.transition().duration(200).style("opacity", 0.9);
+                tooltip
+                    .html(
+                        "Circuit: " +
+                        d.Circuit +
+                        "<br/>" +
+                        "City: " +
+                        d.City +
+                        "<br/>" +
+                        "Country: " +
+                        d.Country
+                    )
+                    .style("left", d3.event.pageX + 10 + "px")
+                    .style("top", d3.event.pageY - 28 + "px")
+                    .style("display", "block");
+            })
+                .on("mouseout", function () {
+                    tooltip.style("display", "none");
+                });
+        }
+
+        //  the g element contains the circles representing the circuit locations on the map
+        let gMarks = g.append("g").attr("class", "marks");
+
+        // adding the circles on th element
+        gMarks
+            .selectAll("circle")
+            .data(yearData[finalYear])
+            .enter()
+            .append("circle")
+            .attr("class", "mark")
+            // adding the coordinates
+            .attr("cx", function (d) {
+                var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                return coords[0];
+            })
+            .attr("cy", function (d) {
+                var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                return coords[1];
+            })
+            //size of th circles
+            .attr("r", 4)
+            .style("fill", "#ba181b");
+
+        // assigning event listeners to the circles, tooltip will show up
+        assignEventListeners(gMarks.selectAll("circle"), tooltip, projection);
+
+        // slecting the dropdown again, to be more understandable
+        const dropdown = d3.select(".dropdown-menu");
+
+        // updating marks when the year is changed
+        dropdown.selectAll("li").on("click", function () {
+            let year = d3.select(this).attr("value");
+            updateYearOnDisplay(year);
+            let marksData = yearData[year];
+
+            // updating the data of the circles with the "mark" class
+            let marks = g.selectAll(".mark") // select only circles with "mark" class
+                .data(marksData);
+
+            // removing circles that are not needed
+            marks.exit().remove();
+
+            // adding new circles and update existing ones
+            marks.enter().append("circle")
+                .attr("class", "mark")
+                .attr("r", 4)
+                .style("fill", "#ba181b")
+                .merge(marks)
+                .transition()
+                .duration(500)
+                .attr("cx", function (d) {
+                    var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                    return coords[0];
+                })
+                .attr("cy", function (d) {
+                    var coords = projection([d.Coordinates[1], d.Coordinates[0]]);
+                    return coords[1];
+                });
+
+            // Assigning event listeners to the updated circles
+            assignEventListeners(g.selectAll(".mark"), tooltip, projection);
+
+            highlightSelectedYear(year);
+        });
+
     });
 }
-
 worldmap();
+
+async function createBarChart() {
+    // setting the margin and dimensions of the chart
+    const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+        width = 1300 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    // Selecting the svg element
+    const svg = d3.select("#barChart")
+        // setting the dimensions
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Loading the data of the counts from the csv file
+    const data = await d3.csv("year_counts.csv");
+    // console.log(data);
+    // Creating x-axis scale using the "Year" column in the data
+    const x = d3.scaleBand()
+        .domain(data.map(d => d.Year))
+        .range([0, width])
+        .padding(0.2);
+    // Appendig the x-axis to the chart
+    svg.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0) rotate(-45)")
+        .style("text-anchor", "end")
+        .style("font-weight", "bold");
+
+    // Appending the x-axis label
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .style("font-family", "Helvetica Neue")
+        .text("F1 Season");
+
+    // Creating the scale using the "Circuits" column in the data
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => +d.Circuit)])
+        .range([height, 0]);
+
+    // Creating the y-axis axis
+    const yAxis = d3.axisLeft(y).ticks(d3.max(data, d => +d.Circuit));
+    // Appending the y-axis to the chart
+    svg.append("g")
+        .call(yAxis)
+        .selectAll("text")
+        .style("font-weight", "bold");
+
+    // Appending the y-axis label
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .style("font-family", "Helvetica Neue")
+        .text("Circuit Count");
+
+    // Creating a bar for each data point and appending it to the chart
+    svg.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("x", d => x(d.Year))
+        .attr("y", d => y(d.Circuit))
+        .attr("width", x.bandwidth())
+        .attr("height", d => height - y(d.Circuit))
+        .attr("fill", "#ba181b");
+
+    // Creating a text element for each bar to show the count
+    svg.selectAll(".bar-text")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("class", "bar-text")
+        .attr("x", d => x(d.Year) + x.bandwidth() / 2)
+        .attr("y", d => y(d.Circuit) - 5)
+        .attr("text-anchor", "middle")
+        .style("font-size", "13px")
+        .style("text-decoration", "bold")
+        .style("fill", "black")
+        .style("visibility", "hidden")
+        .text(d => d.Circuit);
+
+
+    // Appending title to the chart
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 4)
+        .attr("text-anchor", "middle")
+        .style("font-size", "25px")
+        .style("text-decoration", "bold")
+        .style("font-family", "Helvetica Neue")
+        .text("Distribution of circuits across the years");
+}
+// updating the color and opacity of the bars based on the selected year
+function highlightSelectedYear(year) {
+    const bars = d3.select("#barChart").selectAll("rect");
+    bars.transition()
+        .duration(500)
+        // Setting the color of all bars to #ba181b
+        .style("fill", "#ba181b")
+        // Setting the opacity of the selected year's bar to 1, and all others to 0.5
+        .style("opacity", (d) => (d.Year === year ? 1 : 0.5));
+
+    // Updating the visibility of the text elements based on the selected year
+    const barTexts = d3.select("#barChart").selectAll(".bar-text");
+    barTexts.transition()
+        .duration(500)
+        .style("visibility", (d) => (d.Year === year ? "visible" : "hidden"));
+
+}
+
+createBarChart();
+
+
+
+
+
+
 
